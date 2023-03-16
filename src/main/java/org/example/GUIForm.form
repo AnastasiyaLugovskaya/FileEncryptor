@@ -19,7 +19,7 @@
       <vspacer id="7c21">
         <constraints border-constraint="East"/>
       </vspacer>
-      <grid id="75830" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+      <grid id="75830" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="0">
         <constraints border-constraint="Center"/>
         <properties/>
         <border type="none"/>
@@ -28,14 +28,25 @@
             <constraints/>
             <properties>
               <editable value="false"/>
-              <preferredSize width="260" height="30"/>
+              <preferredSize width="460" height="30"/>
               <requestFocusEnabled value="false"/>
             </properties>
           </component>
-          <component id="b7c90" class="javax.swing.JButton" binding="button">
+          <component id="b7c90" class="javax.swing.JButton" binding="selectButton">
             <constraints/>
             <properties>
+              <horizontalAlignment value="0"/>
               <text value="Выберите файл или папку"/>
+            </properties>
+          </component>
+          <hspacer id="2f32b">
+            <constraints/>
+          </hspacer>
+          <component id="6819c" class="javax.swing.JButton" binding="actionButton" default-binding="true">
+            <constraints/>
+            <properties>
+              <text value="Button"/>
+              <visible value="false"/>
             </properties>
           </component>
         </children>
