@@ -5,8 +5,6 @@ import javax.swing.*;
 
 
 public class Main {
-    static String path = "C:\\Users\\nasta\\Desktop\\";
-
     public static void main(String[] args) {
         JFrame frame = new JFrame("File Encryptor");
         frame.setSize(600, 400);

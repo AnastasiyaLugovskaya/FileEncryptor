@@ -1,16 +1,10 @@
 package org.example;
 
+import net.lingala.zip4j.ZipFile;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
-
-import net.lingala.zip4j.ZipFile;
-import net.lingala.zip4j.model.ZipParameters;
-import net.lingala.zip4j.model.enums.AesKeyStrength;
-import net.lingala.zip4j.model.enums.CompressionLevel;
-import net.lingala.zip4j.model.enums.CompressionMethod;
-import net.lingala.zip4j.model.enums.EncryptionMethod;
 
 public class GUIForm {
     private JPanel rootPanel;
@@ -21,16 +15,11 @@ public class GUIForm {
     private boolean encryptedFileSelected = false;
     private String decryptAction = "Расшифровать";
     private String encryptAction = "Зашифровать";
-    private ZipParameters parameters;
-    static char[] password ;
+
+    static char[] password;
 
     public GUIForm() {
-//        parameters = new ZipParameters();
-//        parameters.setCompressionMethod(CompressionMethod.DEFLATE);
-//        parameters.setCompressionLevel(CompressionLevel.ULTRA);
-//        parameters.setEncryptFiles(true);
-//        parameters.setEncryptionMethod(EncryptionMethod.AES);
-//        parameters.setAesKeyStrength(AesKeyStrength.KEY_STRENGTH_256);
+
         selectButton.addActionListener(new Action() {
             @Override
             public Object getValue(String key) {
@@ -68,21 +57,9 @@ public class GUIForm {
                 chooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
                 chooser.showOpenDialog(rootPanel);
                 selectedFile = chooser.getSelectedFile();
-                if (selectedFile == null) {
-                    filePath.setText("");
-                    actionButton.setVisible(false);
-                    return;
-                }
-                filePath.setText(selectedFile.getAbsolutePath());
-                try {
-                    ZipFile zipFile = new ZipFile(selectedFile);
-                    encryptedFileSelected = zipFile.isValidZipFile() && zipFile.isEncrypted();
-                    actionButton.setText(encryptedFileSelected ?
-                            decryptAction : encryptAction);
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                }
-                actionButton.setVisible(true);
+
+                onFileSelect();
+
             }
         });
         actionButton.addActionListener(new Action() {
@@ -122,7 +99,7 @@ public class GUIForm {
                     return;
                 }
 
-                password =  JOptionPane.showInputDialog("Введите пароль: ").toCharArray();
+                password = JOptionPane.showInputDialog("Введите пароль: ").toCharArray();
                 if (encryptedFileSelected) {
                     decryptFile(password);
                 } else {
@@ -134,6 +111,24 @@ public class GUIForm {
 
     public JPanel getRootPanel() {
         return rootPanel;
+    }
+
+    private void onFileSelect() {
+        if (selectedFile == null) {
+            filePath.setText("");
+            actionButton.setVisible(false);
+            return;
+        }
+        filePath.setText(selectedFile.getAbsolutePath());
+        try {
+            ZipFile zipFile = new ZipFile(selectedFile);
+            encryptedFileSelected = zipFile.isValidZipFile() && zipFile.isEncrypted();
+            actionButton.setText(encryptedFileSelected ?
+                    decryptAction : encryptAction);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        actionButton.setVisible(true);
     }
 
     public void setButtonsEnabled(boolean enabled) {
@@ -153,5 +148,9 @@ public class GUIForm {
         decryptorThread.start();
     }
 
+    public void showFinished(){
+        JOptionPane.showMessageDialog(rootPanel, encryptedFileSelected ? "Расшифровка завершена" : "Зашифровано",
+                "Завершено", JOptionPane.INFORMATION_MESSAGE);
+    }
 
 }

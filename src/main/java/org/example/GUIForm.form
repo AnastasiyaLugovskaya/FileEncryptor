@@ -19,9 +19,14 @@
       <vspacer id="7c21">
         <constraints border-constraint="East"/>
       </vspacer>
-      <grid id="75830" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="0">
+      <grid id="75830" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
         <constraints border-constraint="Center"/>
-        <properties/>
+        <properties>
+          <autoscrolls value="true"/>
+          <background color="-9457249"/>
+          <foreground color="-9585761"/>
+          <inheritsPopupMenu value="true"/>
+        </properties>
         <border type="none"/>
         <children>
           <component id="acb8" class="javax.swing.JTextField" binding="filePath">
@@ -32,10 +37,18 @@
               <requestFocusEnabled value="false"/>
             </properties>
           </component>
+          <hspacer id="5f2b3">
+            <constraints/>
+          </hspacer>
           <component id="b7c90" class="javax.swing.JButton" binding="selectButton">
             <constraints/>
             <properties>
+              <background color="-15824031"/>
+              <borderPainted value="false"/>
+              <foreground color="-2167584"/>
+              <hideActionText value="true"/>
               <horizontalAlignment value="0"/>
+              <preferredSize width="200" height="30"/>
               <text value="Выберите файл или папку"/>
             </properties>
           </component>
@@ -45,10 +58,16 @@
           <component id="6819c" class="javax.swing.JButton" binding="actionButton" default-binding="true">
             <constraints/>
             <properties>
+              <background color="-15824031"/>
+              <foreground color="-2167584"/>
+              <preferredSize width="200" height="30"/>
               <text value="Button"/>
               <visible value="false"/>
             </properties>
           </component>
+          <hspacer id="4b2">
+            <constraints/>
+          </hspacer>
         </children>
       </grid>
     </children>

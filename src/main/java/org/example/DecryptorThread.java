@@ -1,7 +1,10 @@
 package org.example;
+
 import net.lingala.zip4j.ZipFile;
+
 import javax.swing.*;
 import java.io.File;
+
 import static org.example.GUIForm.password;
 
 
@@ -16,30 +19,34 @@ public class DecryptorThread extends Thread {
 
     @Override
     public void run() {
-        String outPath = getOutputPath();
+        onStart();
         try {
+            String outPath = getOutputPath();
             ZipFile zipFile = new ZipFile(file, password);
             zipFile.extractAll(outPath);
+            onFinish();
         } catch (Exception ex) {
             if (ex.getMessage().contains("Wrong Password")) {
-                setWrongPasswordWarning();
+                showWrongPasswordWarning();
             } else if (ex.getMessage().contains("empty or null password provided")) {
-                setEmptyPasswordWarning();
+                showEmptyPasswordWarning();
             } else {
                 ex.printStackTrace();
             }
         }
+
     }
 
-    public void setWrongPasswordWarning() {
+    public void showWrongPasswordWarning() {
         JOptionPane.showMessageDialog(form.getRootPanel(), "Пароль указан неверно!",
                 "Ошибка", JOptionPane.WARNING_MESSAGE);
     }
 
-    public void setEmptyPasswordWarning() {
+    public void showEmptyPasswordWarning() {
         JOptionPane.showMessageDialog(form.getRootPanel(), "Пароль не указан!",
                 "Ошибка", JOptionPane.WARNING_MESSAGE);
     }
+
 
     private String getOutputPath() {
         String path = file.getAbsolutePath().replaceAll("\\.enc$", "");
@@ -54,5 +61,14 @@ public class DecryptorThread extends Thread {
 
     public void setFile(File file) {
         this.file = file;
+    }
+
+    public void onFinish() {
+        form.setButtonsEnabled(true);
+        form.showFinished();
+    }
+
+    public void onStart() {
+        form.setButtonsEnabled(false);
     }
 }
